@@ -159,9 +159,8 @@ window.addEventListener('DOMContentLoaded',()=>{
             </div>
         </div>`
           }
-        //   console.log()
           div.innerHTML = container;
-        //   console.log(div) 
+          getDetailsCart()
     })
     .catch(err=>console.log(err))
 })
@@ -170,30 +169,103 @@ window.addEventListener('DOMContentLoaded',()=>{
 function addToCartClicked(prod)
 {
     axios.post('http://localhost:3000/cart',{productId : prod})
+    // axios.post('http://localhost:3000/cart',{})
     .then(response => {
-        console.log(response)
+        if(response.status === 200)
+        {
+            NotifyUser(response.data.message)
+
+        }
+        else
+        {
+           throw new Error(response.data.message);
+        }
+        getDetailsCart()
     })
-    .catch(err => console.log(err))
-}
+
+    .catch(errMsg =>{
+        console.log(errMsg)
+        NotifyUser(errMsg)
+    }   
+
+)}
 
 // /  TO PRODUCT ADDEE SUCCESSFULLY NOTIFICATION 
-const section =document.querySelector('.section-of-bag')
-const contain= document.getElementById('container');
 
 
-section.addEventListener('click',()=>{
-   cretaeNotification();
-});
-
-function cretaeNotification()
+function NotifyUser(message)
 {
+    const container = document.getElementById('container');
     const Notifi = document.createElement('div');
-    Notifi.classList.add('toast')
-    Notifi.innerText="Product added successfully";
-    
-    contain.appendChild(Notifi);
+    Notifi.classList.add('notifi')
+    Notifi.innerText=`<h4>${message}</h4>`;
+    container.appendChild(Notifi);
 
     setTimeout(() =>{
         Notifi.remove();
     },3000)
+}
+
+function  getDetailsCart()
+{
+    axios.get('http://localhost:3000/cart')
+    .then(response =>{
+        let parentElement = document.getElementById('cart-item');
+        let container = "";
+        for(let i=0;i<response.data.products.length;i++)
+        {
+            const title = response.data.products[i].title;
+            let imageSrc =response.data.products[i].imageUrl;
+            let price =response.data.products[i].price;
+            let prodId = response.data.products[i].id;
+            container+=`
+            <div class="show-cart">
+               <div class="cart-items-row-column">
+                  <img src="${imageSrc}" class="cart-images" alt="" width="50" >
+                 <span class="cart-title">${title}</span>
+             </div>
+            
+                 <div >
+                 <span class="cart-price">${price}</span>
+                  <input type="number"  class="cart-row-item-quantity"  value="1">
+                 <button class="cart-item-remove-button" onclick="removeItem(${prodId})">REMOVE</button>
+                  </div>
+                </div>`
+        }
+        parentElement.innerHTML=container;
+        updateCartTotal()
+          removeItem()
+    })
+    .catch(err => console.log(err))
+}
+
+function removeItem(prodId)
+{
+    axios.delete(`http://localhost:3000/cart-delete-item/${prodId}`)
+    .then(result =>{
+        if(result.status == 200)
+        {
+            var removeButtonClicked = document.getElementsByClassName('cart-item-remove-button');
+            for(var i =0; i<removeButtonClicked.length;i++)
+            {
+                var button = removeButtonClicked[i];
+                button.addEventListener('click', removeCartItem)
+            }
+        }
+        else{
+            throw new Error
+        }
+       
+    })
+    .catch(err => console.log(err))
+   
+
+}
+
+
+function removeCartItem(event)
+{
+    var buttonClicked = event.target;
+    buttonClicked.parentElement.parentElement.remove();
+    updateCartTotal();
 }

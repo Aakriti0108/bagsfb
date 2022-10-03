@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const Cart = require('../models/cart');
+const CartItem = require('../models/cart-item');
 
 exports.getProducts = (req, res, next) => {
   Product.findAll()
@@ -59,11 +60,12 @@ exports.getCart = (req, res, next) => {
       return cart
         .getProducts()
         .then(products => {
-          res.render('shop/cart', {
-            path: '/cart',
-            pageTitle: 'Your Cart',
-            products: products
-          });
+          res.status(200).json({success:true , products : products})
+          // res.render('shop/cart', {
+          //   path: '/cart',
+          //   pageTitle: 'Your Cart',
+          //   products: products
+          // });
         })
         .catch(err => console.log(err));
     })
@@ -71,6 +73,11 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.postCart = (req, res, next) => {
+
+  if(!req.body.productId)
+  {
+    return res.status(400).json({success:false , message:'ProductId is missing'})
+  }
   const prodId = req.body.productId;
   let fetchedCart;
   let newQuantity = 1;
@@ -106,20 +113,15 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
-  const prodId = req.body.productId;
-  req.user
-    .getCart()
-    .then(cart => {
-      return cart.getProducts({ where: { id: prodId } });
+  const prodId = req.params.id;
+    CartItem.findAll({where : {productId: prodId}})
+    .then(product => {
+      product[0].destroy()
+      .then(response =>{
+        res.status(200).json({success:true , message:"deleted"})
+      })
     })
-    .then(products => {
-      const product = products[0];
-      return product.cartItem.destroy();
-    })
-    .then(result => {
-      res.redirect('/cart');
-    })
-    .catch(err => console.log(err));
+    .catch(err=>res.json({err}))
 };
 
 exports.getOrders = (req, res, next) => {
