@@ -91,7 +91,7 @@ exports.postCart = (req, res, next) => {
         newQuantity = oldQuantity + 1;
         return product;
       }
-      return Product.findById(prodId);
+      return Product.findByPk(prodId);
     })
     .then(product => {
       return fetchedCart.addProduct(product, {
@@ -99,9 +99,10 @@ exports.postCart = (req, res, next) => {
       });
     })
     .then(() => {
-      res.redirect('/cart');
+      res.status(200).json({ success : true , message:'Successfully added the product '});
     })
-    .catch(err => console.log(err));
+    .catch(err => 
+      res.status(500).json({ success:false, message:'Error occured'} ))
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
