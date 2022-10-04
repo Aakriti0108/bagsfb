@@ -134,36 +134,94 @@ close.addEventListener('click',()=>{
 //       document.getElementsByClassName('total-purchase-price')[0].innerText = '$' + total;
 // }
 
-window.addEventListener('DOMContentLoaded',()=>{
-    axios.get('http://localhost:3000/products')
-    .then((result)=>{
-        //   console.log(result.data.products)
-          let div = document.getElementById('rows')
-          div.innerHTML = "";
-          let container=""; 
 
-          for(let i =0;i < result.data.products.length;i++)
-          {
-            let title = result.data.products[i].title;
-            // console.log(title)
-            let imageSrc =result.data.products[i].imageUrl;
-            let price =result.data.products[i].price;
-            let prod = result.data.products[i].id;
-            container+=`
-            <div class="bag">
-            <h4 class="bag-title" >${title}</h4>
-            <img src="${imageSrc}"  class="images" alt="" width="300px" height="300px">
-            <div class="price-cart">
-                <h3 class="price">${price}</h3>  
-                <button type="button" class="addtocart" id="btn" onClick="addToCartClicked(${prod})">ADD TO CART</button>
-            </div>
-        </div>`
-          }
-          div.innerHTML = container;
+window.addEventListener('DOMContentLoaded',()=>{
+    // axios.get('http://localhost:3000/products')
+    // .then((result)=>{
+    //     //   console.log(result.data.products)
+    //       let div = document.getElementById('rows')
+    //       div.innerHTML = "";
+    //       let container=""; 
+
+    //       for(let i =0;i < result.data.products.length;i++)
+    //       {
+    //         let title = result.data.products[i].title;
+    //         // console.log(title)
+    //         let imageSrc =result.data.products[i].imageUrl;
+    //         let price =result.data.products[i].price;
+    //         let prod = result.data.products[i].id;
+    //         container+=`
+    //         <div class="bag">
+    //         <h4 class="bag-title" >${title}</h4>
+    //         <img src="${imageSrc}"  class="images" alt="" width="300px" height="300px">
+    //         <div class="price-cart">
+    //             <h3 class="price">${price}</h3>  
+    //             <button type="button" class="addtocart" id="btn" onClick="addToCartClicked(${prod})">ADD TO CART</button>
+    //         </div>
+    //     </div>`
+    //       }
+    //       div.innerHTML = container;
           getDetailsCart()
+          pagination()
     })
-    .catch(err=>console.log(err))
-})
+//     .catch(err=>console.log(err))
+// })
+
+let c = 0;
+let cc = 1;
+let pag = document.getElementById('pagination');
+
+function pagination(e) {
+    axios.get("http://localhost:3000/products")
+    .then((productInfo)=>{
+        console.log(productInfo.data)
+      let number_of_pages;
+      if(productInfo.data.products.length % 2 == 0) {
+         number_of_pages = Math.trunc(((productInfo.data.products.length)/2))
+      } else {
+         number_of_pages = Math.trunc(((productInfo.data.products.length)/2)+1)
+      }
+     
+      for (let i = 0; i < number_of_pages; i++) {
+        pag.innerHTML += `<button class="pagebtn" id="?page=${c++}">${cc++}</button> `;
+        console.log(pag)
+      }
+    })
+    .catch(err=> NotifyUser(err))
+  }
+  
+  pag.addEventListener('click', (e)=>{
+    let id = e.target.id;
+    console.log(id)
+    axios.get(`http://localhost:3000/limited${id}`)
+    .then(productInfo=>{
+        console.log(productInfo.data.products)
+      let products = productInfo.data.products;
+       let container="";
+        let parent = document.getElementById("rows");
+       for( let i =0;i<productInfo.data.products.length;i++)
+       {
+        let title = productInfo.data.products[i].title;
+        console.log(title)
+        let imageSrc = productInfo.data.products[i].imageUrl;
+        let price = productInfo.data.products[i].price;
+        let prod = productInfo.data.products[i].id;
+         container+=` <div class="bag">
+                 <h4 class="bag-title" >${title}</h4>
+               <img src="${imageSrc}"  class="images" alt="" width="300px" height="300px">
+               <div class="price-cart">
+                      <h3 class="price">${price}</h3>  
+                  <button type="button" class="addtocart" id="btn" onClick="addToCartClicked(${prod})">ADD TO CART</button>
+                </div>
+             </div>`
+
+       }
+        
+      
+        parent.innerHTML = container;
+    })
+    .catch(err=> console.log(err))
+  })
 
 
 function addToCartClicked(prod)
@@ -193,18 +251,18 @@ function addToCartClicked(prod)
 // /  TO PRODUCT ADDEE SUCCESSFULLY NOTIFICATION 
 
 
-function NotifyUser(message)
-{
-    const container = document.getElementById('container');
-    const Notifi = document.createElement('div');
-    Notifi.classList.add('notifi')
-    Notifi.innerText=`<h4>${message}</h4>`;
-    container.appendChild(Notifi);
+// function NotifyUser(message)
+// {
+//     const container = document.getElementById('container');
+//     const Notifi = document.createElement('div');
+//     Notifi.classList.add('notifi')
+//     Notifi.innerText=`<h4>${message}</h4>`;
+//     container.appendChild(Notifi);
 
-    setTimeout(() =>{
-        Notifi.remove();
-    },3000)
-}
+//     setTimeout(() =>{
+//         Notifi.remove();
+//     },3000)
+// }
 
 function  getDetailsCart()
 {
@@ -234,7 +292,6 @@ function  getDetailsCart()
         }
         parentElement.innerHTML=container;
         updateCartTotal()
-          removeItem()
     })
     .catch(err => console.log(err))
 }
@@ -269,3 +326,25 @@ function removeCartItem(event)
     buttonClicked.parentElement.parentElement.remove();
     updateCartTotal();
 }
+
+
+function updateCartTotal()
+{
+      var cartItemContainer = document.getElementsByClassName('cart-items')[0]
+      var cartRows = cartItemContainer.getElementsByClassName('show-cart'); 
+      var total =0;
+      console.log(cartRows)
+      for(var i =0; i<cartRows.length;i++)
+      {
+        var cartRow = cartRows[i];
+        var priceElement = cartRow.getElementsByClassName('cart-price')[0]
+        var quantityElement = cartRow.getElementsByClassName('cart-row-item-quantity')[0]
+        var price = parseFloat(priceElement.innerText)
+        var quantity = quantityElement.value
+        total = total + (price*quantity);
+       
+      }
+      total = Math.round(total);
+      document.getElementsByClassName('total-purchase-price')[0].innerText = '$' + total;
+}
+

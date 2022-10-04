@@ -17,6 +17,19 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
+exports.limitProducts = (req, res, next) => {
+  let page = Number(req.query.page);
+  let Limit = 2;
+  
+    Product.findAll({limit:2,offset:Limit*page})
+      .then(products => {
+        res.json({products , success:true}) 
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
   // Product.findAll({ where: { id: prodId } })
