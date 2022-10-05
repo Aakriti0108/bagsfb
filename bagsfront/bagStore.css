@@ -3,12 +3,17 @@ header{
     padding: 2rem;
 }
 
-.header-attribute-class{
+#header-attribute-class{
     color:#967E76;
-    margin-left: 250px;
+    margin-left: 200px;
     font-size: 30px;
 }
 
+.header-attribute-class{
+    color:#967E76;
+    margin-left:180px;
+    font-size:30px;
+}
 h1{
     background-color: #EEE3CB;
     padding: 25px;
@@ -31,42 +36,7 @@ h1{
     max-width: 900px;
 }
 
-/* .row-of-bag
-{
-    margin: 0px 10px;
-    overflow:hidden;
-} */
-/* 
-#rows{
-    display: flex;
-} */
-/* .bag{
-    width:450px;
-    margin: 100px;
-    border:2px solid black;
-} */
 
-/* h4{
-    text-align: center;
-    font-size: 20px;
-} */
-
-/* .price-cart{
-    font-size: 20px;
-    text-align: center;
-} */
-
-/* .price{
-    font-size: 20px;
-    color: #967E76;
-} */
-/* .addtocart{
-    padding: 10px;
-    font-size: 15px;
-    background-color: #FFD1D1;
-    border:#FFD1D1 ;
-    border-radius: 15px;
-} */
 
 footer{
     background-color: #967E76;
@@ -210,4 +180,9 @@ h3{
     color: aliceblue;
 }
 
-
+#purchase{
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+   
+}
