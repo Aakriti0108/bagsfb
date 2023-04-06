@@ -17,7 +17,9 @@ async function signup(e)
    }
    else
    {
+
     throw new Error ('failed to login')
+    
    }
 }
 catch(err){
