@@ -6,24 +6,25 @@ const shopController = require('../controllers/shop');
 
 const router = express.Router();
 
-router.get('/limited', shopController.limitProducts);
 
-router.get('/', shopController.getIndex);
+// router.get('/limited', shopController.limitProducts);
 
-router.get('/products', shopController.getProducts);
+// router.get('/', shopController.getIndex);
 
-router.get('/products/:productId', shopController.getProduct);
+router.get('/products', shopController.getAllProducts);
 
-router.get('/cart', shopController.getCart);
+// router.get('/products/:productId', shopController.getProduct);
 
-router.post('/cart', shopController.postCart);
+// router.get('/cart', shopController.getCart);
 
-router.delete('/cart-delete-item/:id', shopController.postCartDeleteProduct);
+//  router.post('/cart', shopController.postCart);
 
-router.get('/orders', shopController.getOrders);
+// router.delete('/cart-delete-item/:id', shopController.postCartDeleteProduct);
 
-router.get('/checkout', shopController.getCheckout);
+// router.get('/orders', shopController.getOrders);
 
-router.post('/CreateOrder',shopController.postOrder)
+// router.get('/checkout', shopController.getCheckout);
+
+// router.post('/CreateOrder',shopController.postOrder)
 
 module.exports = router;

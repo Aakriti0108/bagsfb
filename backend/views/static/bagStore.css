@@ -30,10 +30,21 @@ h1{
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
+
+
 .section-of-bag{
     padding: 20px 30px;
     margin: auto;
     max-width: 900px;
+}
+
+.title-price
+{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    
 }
 
 
@@ -54,9 +65,10 @@ footer{
     margin-top: 10px;
 }
 h3{
-    font-size: 15px;
-    margin: 30px;
+    font-size: 20px;
+    margin: 10px;
 }
+
 /* .section-of-bag{
     background-color: #FFF5E4;
     margin:0px 200px;

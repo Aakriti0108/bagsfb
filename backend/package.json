@@ -1,26 +1,20 @@
 {
-  "name": "nodejs-complete-guide",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "Complete Node.js Guide",
+  "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
-    "start-server": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Maximilian Schwarzmüller",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^1.19.4"
-  },
   "dependencies": {
-    "body-parser": "^1.20.0",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "ejs": "^2.6.1",
-    "express": "^4.18.1",
-    "express-handlebars": "^3.0.0",
-    "mysql2": "^1.7.0",
-    "pug": "^2.0.3",
-    "sequelize": "^5.22.5"
+    "crypto-js": "^4.1.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.2.0"
   }
 }

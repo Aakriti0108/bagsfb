@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense TRACKER FRONTEND</title>
+    <link rel="stylesheet" href="/static/signup.css">
+</head>
+<body>
+
+    <section class="Signup-complete-details" style="background-color:black;">
+
+           <section class="signup">
+              <div class="signup-img">
+                <img src="https://plus.unsplash.com/premium_photo-1679736181128-ac8e129dd99d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDIyfENEd3V3WEpBYkV3fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="" width="600" height="600" >
+              </div>
+                <div class="signup-details">
+                <h1 style="color:aliceblue;">LOGIN</h1>
+                <form  onsubmit="login(event)" style="color:aliceblue;">
+                <label for="name">Email</label><br><br>
+                <input type="email" name="email" required/><br><br><br><br>
+                <label for="password">Password</label><br><br>
+                <input type="password" name="password" required/><br><br><br>
+                <button id="signup-btn" style="color:pink">LOGIN</button>
+                <a href="./signup.html" style="color:aliceblue;">SIGNUP</a>
+                </form>  
+            </div>
+           </section>
+
+           <section class="signup-auto.text" style="color:aliceblue;">
+                <h2 class="auto-type" ></h2>
+          </section>
+
+    </section>   
+      <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+<script>
+    var typed = new Typed(".auto-type",{
+        strings:[ `<pre>
+                 WELCOME TO LOGIN SCREEN
+</pre>`],
+        typeSpeed : 20,
+        backSpeed:10,
+        loop : true
+    })
+</script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <script src="/static/login.js"></script>
+</body>
+</html>

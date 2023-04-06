@@ -1,0 +1,51 @@
+body{
+    background-color: #596E79;
+}
+
+.Signup-complete-details{
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-auto.text{
+    margin:10px;
+}
+
+.signup{
+    display: flex;
+    flex-direction: row;
+}
+
+.signup-img{
+   margin:25px 80px;
+}
+
+.signup-details{
+ margin: 25px 60px;
+}
+
+h1{
+    font-size: 50px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+label{
+    font-size: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 25px ;
+}
+
+input{
+   font-size:20px;
+   width:450px;
+   height: 45px;
+   border: 2px solid black;
+   border-radius: 15px;
+}
+
+#signup-btn{
+    font-size: 40px;
+    margin:30px 250px;
+    border-radius: 20px;
+
+}

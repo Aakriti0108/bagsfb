@@ -1,39 +1,44 @@
-
+console.log("starting journey again");
 
 // CART  POP
-const open = document.getElementById('openCartBtn')
+const open = document.getElementById('openCart');
 const close = document.getElementById('close')
 const container = document.querySelector('.cart-display-section');
 
-open.addEventListener('click',()=>{
+open.addEventListener('click',(event)=>{
     container.classList.add('active');
 })
-close.addEventListener('click',()=>{
+close.addEventListener('click',(event)=>{
     container.classList.remove('active');
 })
 
 
 // DomManipulator
+
 window.addEventListener('DOMContentLoaded',()=>{
-    axios.get(`http://localhost:3000/limited?page=0`)
+    // axios.get(`http://localhost:3000/limited?page=0`)
+    axios.get(`http://localhost:3000/shopping/products`)
     .then(productInfo=>{
-        console.log(productInfo.data.products)
-      let products = productInfo.data.products;
+        console.log(productInfo.data.data)
+      let products = productInfo.data.data;
        let container="";
         let parent = document.getElementById("rows");
-       for( let i =0;i<productInfo.data.products.length;i++)
+       for( let i =0;i<products.length;i++)
        {
-        let title = productInfo.data.products[i].title;
+        let title = products[i].title;
         console.log(title)
-        let imageSrc = productInfo.data.products[i].imageUrl;
-        let price = productInfo.data.products[i].price;
-        let prod = productInfo.data.products[i].id;
+        let imageSrc = products[i].imageUrl;
+        let price = products[i].price;
+        let prod = products[i].id;
          container+=` <div class="bag">
-                 <h4 class="bag-title" >${title}</h4>
+                 
                <img src="${imageSrc}"  class="images" alt="" width="300px" height="300px">
+               <div class="title-price">
+               <h2 class="bag-title" >${title}</h2>
                <div class="price-cart">
                       <h3 class="price">${price}</h3>  
                   <button type="button" class="addtocart" id="btn" onClick="addToCartClicked(${prod})">ADD TO CART</button>
+                  </div>
                 </div>
              </div>`
 
@@ -55,7 +60,7 @@ let cc = 1;
 let pag = document.getElementById('pagination');
 
 function pagination(e) {
-    axios.get("http://localhost:3000/products")
+    axios.get("http://localhost:3000/shopping/products")
     .then((productInfo)=>{
         console.log(productInfo.data)
       let number_of_pages;
@@ -81,7 +86,7 @@ function pagination(e) {
     axios.get(`http://localhost:3000/limited${id}`)
     .then(productInfo=>{
         console.log(productInfo.data.products)
-      let products = productInfo.data.products;
+     let products = productInfo.data.products;
        let container="";
         let parent = document.getElementById("rows");
        for( let i =0;i<productInfo.data.products.length;i++)
